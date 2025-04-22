@@ -12,8 +12,8 @@
 
 The Differences between mainnet and testnet contracts are:
 
-- No data encoding on chain because it consumes gas excessively and almost all of the functions require encoding due to struct usage.
-- Data encoding will take place only the backend or when using `Anvil` the power local node from Foundry. 
+- No data encoding on mainnet because it consumes gas excessively and almost all of the functions require encoding due to struct usage.
+- Data encoding will take place in the backend when deployed on mainnet, some encoding will occur on testnet. 
 - contracts structure is a bit different on testnets from mainnets.
 
 
