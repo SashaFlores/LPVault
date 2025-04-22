@@ -12,10 +12,10 @@
 
 ### CODE
 
-- Testnet code: exact code except using library tests and `PositionManagerTest` smart contract.
+- Testnet code: exact code as mainnet except using library tests and `PositionManagerTest` smart contract.
 
 - `swap` function on mainnet contract
 
-- Scripts
+- Script for mainnet
 
-- tests
+- test for mainnet
