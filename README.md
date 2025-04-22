@@ -1,66 +1,21 @@
-## Foundry
+// TODO:
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+### REAMDE:
 
-Foundry consists of:
+- explain what's happening under the hook in the code
+- provide links of deployed addresses on different chains
+- charts of LP Cycle
+- link to SDCC Certificate
+- link to Cyfrin Updraft
+- link to CodeHawks for first Flights
+- link to solodit 
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+### CODE
 
-## Documentation
+- Testnet code: exact code except using library tests and `PositionManagerTest` smart contract.
 
-https://book.getfoundry.sh/
+- `swap` function on mainnet contract
 
-## Usage
+- Scripts
 
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+- tests
