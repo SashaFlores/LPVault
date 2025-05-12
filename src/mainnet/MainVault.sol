@@ -7,14 +7,16 @@ import {PoolKey, PoolIdLibrary} from "v4-core/src/types/PoolKey.sol";
 import {IHooks} from "v4-core/src/interfaces/IHooks.sol";
 import {IPoolManager} from "v4-core/src/interfaces/IPoolManager.sol";
 import {IPositionManager} from "v4-periphery/src/interfaces/IPositionManager.sol";
-// import {SafeCallback} from "v4-periphery/src/base/SafeCallback.sol";
+import {SafeCallback} from "v4-periphery/src/base/SafeCallback.sol";
 // import {IV4Router} from "v4-periphery/src/interfaces/IV4Router.sol";
-// import {Actions} from "v4-periphery/src/libraries/Actions.sol";
+import {Actions} from "v4-periphery/src/libraries/Actions.sol";
 // import {IPermit2} from "permit2/src/interfaces/IPermit2.sol";
-// import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20} from "openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {StateLibrary} from "v4-core/src/libraries/StateLibrary.sol";
 
-contract LPVault {
+
+
+contract MainVault is SafeCallback {
     using CurrencyLibrary for Currency;
     using PoolIdLibrary for PoolKey;
     using StateLibrary for IPoolManager;
@@ -25,10 +27,11 @@ contract LPVault {
 
 
 
-    constructor(IPoolManager _manager, IPositionManager _posm) {
+    constructor(IPoolManager _manager, IPositionManager _posm) SafeCallback(_manager) {
         manager = _manager;
         posm = _posm;
     }
+
 
     /**
      * @notice This function initiates a new pool without funding. 
@@ -79,6 +82,7 @@ contract LPVault {
      * @param deadline uint256 deadline for the transaction.
      * 
      * @dev Excess funding will not be refunded unless `sweep` is encoded in actions.
+     * 
      * @dev Provide `deadline` in seconds that will be added to the current block timestamp.
      * 
      * Requirements:
@@ -100,6 +104,7 @@ contract LPVault {
     /**
      * @notice This function creates and funds a pool in a single transaction.
      * @param data bytes array containing the data for creating and funding the pool.
+     * 
      * @dev The data encoded is:
      * - `initializePool` function selector and parameters
      * - `modifyLiquidity` function selector and parameters
@@ -132,8 +137,7 @@ contract LPVault {
         uint24 protocolFee, 
         uint24 lpFee
     ) {
-        return manager.getSlot0(key.toId());
-
+        return poolManager.getSlot0(key.toId());
     }
 
     /**
@@ -142,8 +146,11 @@ contract LPVault {
      * @return liquidity uint128 the current liquidity of the pool.
      */
     function getPoolLiquidity(PoolKey calldata key) external view returns (uint128 liquidity) {
-        return manager.getLiquidity(key.toId());
+        return poolManager.getLiquidity(key.toId());
     }
+
+
+
 
     function getProviderPosition(
         PoolId poolId, 
@@ -159,5 +166,7 @@ contract LPVault {
         return manager.getPositionInfo(poolId, owner, tickLower, tickUpper, salt);
     }
 
-
+    function _unlockCallback(bytes calldata data) internal override returns (bytes memory) {
+        // (...) = abi.decode(data, (...));
+    }
 }
